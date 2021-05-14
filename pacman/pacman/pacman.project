@@ -134,6 +134,8 @@ monitor restart</PostConnectCommands>
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
+    <File Name="keypad.c"/>
+    <File Name="keypad.h"/>
     <File Name="object.c"/>
     <File Name="object.h"/>
     <File Name="graphics.c"/>
