@@ -79,15 +79,16 @@ unsigned short keyb_alt_ctrl(void)
 void keypad_init(void) 
 {
 	// Konfigurerar pinnar 15-12 samt 7-0 som utgång, pinnar 11-8 som ingång.
-	*GPIO_D_MODER = 0x55005555;
+	*GPIO_D_MODER &= ~0x55FF0000;
+    *GPIO_D_MODER |= 0x55000000;
 	
 	// Säkerställer att input-pinnarna är "pull-up".
 	*GPIO_D_PUPDR &= 0xFF00FFFF;
 	*GPIO_D_PUPDR |= 0x00550000;
 	
 	// Sätter utportstypen till "push-pull".
-	*GPIO_D_OTYPER &= 0x0F00;
+	*GPIO_D_OTYPER &= 0x0FFF;
 	
 	// Sätter frekvensen för utgångsuppdateringen till 2 MHz.
-	*GPIO_D_OSPEEDR &= 0x00FF0000;
+	*GPIO_D_OSPEEDR &= 0x00FFFFFF;
 }

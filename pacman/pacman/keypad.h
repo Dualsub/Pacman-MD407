@@ -1,3 +1,6 @@
+#ifndef KEYPAD_H
+#define KEYPAD_H
+
 // Definitioner för GPIOD och dess register.
 #define GPIO_D 0x40020C00
 #define GPIO_D_MODER ((volatile unsigned int *) GPIO_D)
@@ -15,3 +18,5 @@ void kbd_active(unsigned int row);
 int kbd_get_col(void); 
 unsigned short keyb_alt_ctrl(void);
 void keypad_init(void);
+
+#endif

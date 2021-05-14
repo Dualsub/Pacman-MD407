@@ -1,5 +1,5 @@
- // Definerar att simulatorn nu används.
- #define SIMULATOR
+#ifndef DELAY_H
+#define DELAY_H
  
  // Definitioner för SysTick och dess register.
  #define STK		0xE000E010
@@ -11,3 +11,5 @@
 void delay_250ns();
 void delay_milli(unsigned int ms);
 void delay_mikro(unsigned int us);
+
+#endif
