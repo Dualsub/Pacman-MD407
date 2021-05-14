@@ -1,1 +1,7 @@
--IC:\Users\filip\Documents\LP4\Maskinorienterad_programmering\laboration_5\Pacman-MD407\pacman\pacman
+-Ic:\cseapp\CodeLite\tools\gcc-arm\arm-none-eabi\include\c++\9.2.1
+-Ic:\cseapp\CodeLite\tools\gcc-arm\arm-none-eabi\include\c++\9.2.1\arm-none-eabi
+-Ic:\cseapp\CodeLite\tools\gcc-arm\arm-none-eabi\include\c++\9.2.1\backward
+-Ic:\cseapp\CodeLite\tools\gcc-arm\lib\gcc\arm-none-eabi\9.2.1\include
+-Ic:\cseapp\CodeLite\tools\gcc-arm\lib\gcc\arm-none-eabi\9.2.1\include-fixed
+-Ic:\cseapp\CodeLite\tools\gcc-arm\arm-none-eabi\include
+-IC:\dev\repos\pacman\pacman\pacman

@@ -134,6 +134,10 @@ monitor restart</PostConnectCommands>
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
+    <File Name="object.c"/>
+    <File Name="object.h"/>
+    <File Name="graphics.c"/>
+    <File Name="graphics.h"/>
     <File Name="delay.c"/>
     <File Name="delay.h"/>
     <File Name="startup.c"/>
