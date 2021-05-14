@@ -2,3 +2,4 @@ pacman/.codelite/
 pacman/tags
 pacman/pacman/Debug
 pacman/pacman/compile_flags.txt
+pacman/pacman/pacman.mk
