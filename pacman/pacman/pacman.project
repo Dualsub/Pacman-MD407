@@ -134,6 +134,10 @@ monitor restart</PostConnectCommands>
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
+    <File Name="ghost.c"/>
+    <File Name="ghost.h"/>
+    <File Name="pacman.c"/>
+    <File Name="pacman.h"/>
     <File Name="keypad.c"/>
     <File Name="keypad.h"/>
     <File Name="object.c"/>
