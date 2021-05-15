@@ -5,7 +5,7 @@ void pacman_move(OBJECT* obj)
 {
     obj->clear(obj);
     char c;
-    c = keyb_alt_ctrl();
+    c = keyb();
     switch(c) 
     {
         case 6: obj->set_speed(obj, 2,0); break;

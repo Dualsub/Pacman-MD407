@@ -53,32 +53,26 @@ int kbd_get_col(void)
 	return 0;
 }
 
-// Variabel som håller keypadens status (ändrad eller inte).
-// Deklarerad globalt för att vara oändrad mellan anrop av "keyb_alt_ctrl".
-char keybstate = 0;
-
-// Returnerar vilka tangeter som är nedtyckta
-unsigned short keyb_alt_ctrl(void) 
+unsigned char keyb(void) 
 {
-	unsigned short key_status = 0;
-
-	// Läser av varje rad på keypaden och lägger värdet i "key_status" genom att
-	// skifta till rätt position.
-	for(int row = 0; row < 4; row++) 
+	char key[] = { 1,2,3,0xA,4,5,6,0xB,7,8,9,0xC,0xE,0,0xF,0xD };
+	int row, col;
+	for(row = 1; row <= 4; row++) 
 	{
-		kbd_active(row + 1);
-		unsigned short c = (unsigned short)*GPIO_D_IDR_HIGH;
-		c &= 0x000F;
-		c = c << 4 * (3 - row);
-		key_status |= c;
+		kbd_active(row);
+		if(col = kbd_get_col()) 
+		{
+			kbd_active(0);
+			return key[4*(row-1)+(col-1)];
+		}
 	}
 	
-	return key_status;
+	return 0xFF;
 }
 
 void keypad_init(void) 
 {
-	// Konfigurerar pinnar 15-12 samt 7-0 som utgång, pinnar 11-8 som ingång.
+	// Konfigurerar pinnar 15-12 och pinnar 11-8 som ingång.
 	*GPIO_D_MODER &= ~0x55FF0000;
     *GPIO_D_MODER |= 0x55000000;
 	

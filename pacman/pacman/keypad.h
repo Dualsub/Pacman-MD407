@@ -16,7 +16,7 @@
 
 void kbd_active(unsigned int row);
 int kbd_get_col(void); 
-unsigned short keyb_alt_ctrl(void);
+unsigned char keyb(void);
 void keypad_init(void);
 
 #endif
