@@ -3,6 +3,9 @@
 
 #include "graphics.h"
 
+// Definerar storlek på en ruta i rutnätet.
+#define UNIT_SIZE 7
+
 // Definerar ett objekt med geometri, position och riktning.
 typedef struct tObj 
 {
