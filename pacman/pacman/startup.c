@@ -23,5 +23,7 @@ void main(void)
     keypad_init();
     
     ascii_display("High Score:", 1);
+    
+    
 }
 

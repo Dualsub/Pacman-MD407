@@ -23,8 +23,7 @@ typedef struct
 	unsigned char sizex, sizey;
 } WALL;
 
-void pacman_move(OBJECT* obj);
-void ghosts_move(OBJECT* obj);
-
+void set_object_speed(OBJECT* obj, int x, int y);
+void clear_object(OBJECT* obj);
 
 #endif
