@@ -3,6 +3,9 @@
 
 void pacman_move(OBJECT* obj, POINT* points, unsigned char num_points)
 {
+	if(obj->dirx == 0 && obj->diry == 0)
+		return
+	
     obj->clear(obj);
     char c;
     c = keyb();
@@ -38,10 +41,10 @@ void pacman_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
     {
         POINT wall_point = points[i];
         // Kontrollerar om "Pacman" överlappar med någon vägg.
-        char overlap_x1 = (obj->posx <= wall_point.x && obj->posx + obj->geo->sizex >= wall_point.x);  
-        char overlap_x2 = (wall_point.x <= obj->posx && wall_point.x + UNIT_SIZE >= obj->posx);  
-        char overlap_y1 = (obj->posy <= wall_point.y && obj->posy + obj->geo->sizey >= wall_point.y);
-        char overlap_y2 = (wall_point.y <= obj->posy && wall_point.y + UNIT_SIZE >= obj->posy);
+        char overlap_x1 = ((obj->posx <= wall_point.x) && (obj->posx + obj->geo->sizex >= wall_point.x));  
+        char overlap_x2 = ((wall_point.x <= obj->posx) && (wall_point.x + UNIT_SIZE >= obj->posx));  
+        char overlap_y1 = ((obj->posy <= wall_point.y) && (obj->posy + obj->geo->sizey >= wall_point.y));
+        char overlap_y2 = ((wall_point.y <= obj->posy) && (wall_point.y + UNIT_SIZE >= obj->posy));
         // Om de överlappar, placera "Pacman" på rätt plats.
         if((overlap_x1 || overlap_x2) && (overlap_y1 || overlap_y2))
         {

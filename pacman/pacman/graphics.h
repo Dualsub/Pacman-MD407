@@ -1,7 +1,7 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#define MAX_POINTS
+#define MAX_POINTS 2500
 
 typedef struct 
 {

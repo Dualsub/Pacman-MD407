@@ -18,8 +18,6 @@ typedef struct tObj
 	void (* set_speed) (struct tObj *, int, int);
 } OBJECT, *POBJECT;
 
-#define WALL_SIZE 8
-
 typedef struct 
 {
 	int posx,posy;
