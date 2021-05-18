@@ -18,16 +18,19 @@ __asm__ volatile(" BL main\n");					/* call main */
 __asm__ volatile(".L1: B .L1\n");				/* never return */
 }
 
+#define NUM_WALLS 56
+
 void main(void)
 {
     graphics_init();
     keypad_init();
     
     ascii_display("High Score:", 1);
+    ascii_display("12765", 2);
     
 	GEOMERTY pacman_sprite = { 
 	37, 
-	7, 7,
+	5, 5,
 	{
 	{2,0},
 	{3,0},
@@ -72,17 +75,19 @@ void main(void)
 	OBJECT pacman = { 
 		&pacman_sprite, 
 		0, 0,
-		49, 14,
+		56, 28,
 		pacman_draw,
 		clear_object,
 		pacman_move,
 		set_object_speed
 		};
 	
-	pacman.draw(&pacman);
-	
-	POINT level[56] = {
-	{4,0},
+	POINT level[NUM_WALLS] = {
+/*		{2,2},
+		{2,3},
+		{2,4},
+		{2,5}
+*/	{4,0},
 	{13,0},
 	{1,1},
 	{2,1},
@@ -152,7 +157,8 @@ void main(void)
 		}
 	};
 	
-	for(int i = 0; i < 56; i++)
+	
+	for(int i = 0; i < NUM_WALLS; i++)
 	{
 		POINT p = level[i];
 		
@@ -171,7 +177,7 @@ void main(void)
 	
 	while(1)
 	{
-		pacman_move(&pacman, level, 56);
+		pacman_move(&pacman, level, NUM_WALLS);
 	}
 	
 	
