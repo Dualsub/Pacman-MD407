@@ -92,3 +92,12 @@ void ghost_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 		}
     }
 }
+char ghost_pacman_collide(OBJECT* ghost, OBJECT* pacman)
+{
+        char overlap_x1 = ((ghost->posx <= pacman->posx) && (ghost->posx + UNIT_SIZE >= pacman->posx));  
+        char overlap_x2 = ((pacman->posx <= ghost->posx) && (pacman->posx + UNIT_SIZE >= ghost->posx));  
+        char overlap_y1 = ((ghost->posy <= pacman->posy) && (ghost->posy + UNIT_SIZE >= pacman->posy));
+        char overlap_y2 = ((pacman->posy <= ghost->posy) && (pacman->posy + UNIT_SIZE >= ghost->posy));
+        
+        return !((overlap_x1 || overlap_x2) && (overlap_y1 || overlap_y2));
+}

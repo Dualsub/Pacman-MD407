@@ -834,9 +834,14 @@ void main(void)
 	
 	while(1)
 	{
-		ghost_move(&ghost, level, NUM_WALLS);
+        ghost_move(&ghost, level, NUM_WALLS);
 		ghost_move(&ghost2, level, NUM_WALLS);
 		pacman_move(&pacman, level, NUM_WALLS);
+        if (ghost_pacman_collide(&pacman, &ghost) || ghost_pacman_collide(&pacman, &ghost2))
+            // Skriver game over.
+            delay_mikro(100);
+            graphics_clear_screen();
+            break;
 	}
 	
 	
