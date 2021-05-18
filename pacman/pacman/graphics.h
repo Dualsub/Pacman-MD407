@@ -1,7 +1,7 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#define MAX_POINTS 2500
+#define MAX_POINTS 40
 
 typedef struct 
 {
@@ -14,7 +14,7 @@ typedef struct
 	int numpoints;
 	int sizex;
 	int sizey;
-	POINT px[MAX_POINTS]
+	POINT px[MAX_POINTS];
 } GEOMERTY;
 
 void graphics_initalize ( void );

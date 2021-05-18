@@ -5,12 +5,12 @@
 // Uppdaterar positionen för ett spöke
 void ghost_move(OBJECT* obj, POINT* points, unsigned char num_points)
 {
-	obj->clear(obj);
     
     obj->posx = obj->posx + obj->dirx;
 	obj->posy = obj->posy + obj->diry;
     ghost_wall_overlap(obj, points, num_points);
     
+	obj->clear(obj);
     obj->draw(obj);
 }
 
@@ -21,6 +21,8 @@ void ghost_draw(OBJECT* obj)
 	for(int i = 0; i < geoptr->numpoints; i++)
 	{
 		POINT p = geoptr->px[i];
+		POINT buffer_p = {obj->posx + p.x, obj->posy + p.y};
+		obj->px_buffer[i] = buffer_p;
 		graphics_pixel_set(obj->posx + p.x, obj->posy + p.y);
 	}
 }
@@ -50,14 +52,7 @@ void ghost_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 				}
                 obj->dirx = 0;
                 // Slumpar fram en ny riktning.
-                if (obj->posx % 2)
-                {
-                    obj->diry = 1;
-                }
-                else
-                {
-                    obj->diry = -1;
-                }
+				obj->diry = GHOST_SPEED * (obj->posy % 2 ?  1:-1);
                 
 			} 
 			else if(obj->diry != 0)
@@ -72,15 +67,28 @@ void ghost_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 				}
                 obj->diry = 0;
                 // Slumpar fram en ny riktning.
-                if (obj->posx % 2)
-                {
-                    obj->dirx = 1;
-                }
-                else
-                {
-                    obj->dirx = -1;
-                }
+				obj->dirx = GHOST_SPEED * (obj->posx % 2 ?  1:-1);
 			}
         }
+		if(obj->posx < 1)
+		{
+			obj->posx = 1;
+			obj->dirx = GHOST_SPEED;
+		}
+		else if(obj->posx + UNIT_SIZE > 128)
+		{
+			obj->posx = 128 - UNIT_SIZE - 1;
+			obj->dirx = -GHOST_SPEED;
+		}
+		if(obj->posy < 1)
+		{
+			obj->posy = 1;
+			obj->diry = GHOST_SPEED;
+		}
+		else if(obj->posy + UNIT_SIZE > 64)
+		{
+			obj->posy = 64 - UNIT_SIZE - 1;
+			obj->diry = -GHOST_SPEED;
+		}
     }
 }

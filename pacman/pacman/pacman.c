@@ -4,23 +4,22 @@
 // Uppdaterar positionen för "Pacman".
 void pacman_move(OBJECT* obj, POINT* points, unsigned char num_points)
 {	
-	obj->clear(obj);
- 
    char c;
     c = keyb();
     switch(c) 
     {
-        case 6: obj->set_speed(obj, 1,0); break;
-        case 4: obj->set_speed(obj, -1,0); break;
+        case 6: obj->set_speed(obj, BASE_SPEED,0); break;
+        case 4: obj->set_speed(obj, -BASE_SPEED,0); break;
         case 5: obj->set_speed(obj, 0,0); break;
-        case 2: obj->set_speed(obj, 0,-1); break;
-        case 8: obj->set_speed(obj, 0,1); break;
+        case 2: obj->set_speed(obj, 0,-BASE_SPEED); break;
+        case 8: obj->set_speed(obj, 0,BASE_SPEED); break;
         default: obj->set_speed(obj, 0,0); break;
     }
 	obj->posx = obj->posx + obj->dirx;
 	obj->posy = obj->posy + obj->diry;
 	pacman_wall_overlap(obj, points, num_points);
     
+	obj->clear(obj);
 	obj->draw(obj);
 }
 
@@ -30,10 +29,11 @@ void pacman_draw(OBJECT* obj)
 	for(int i = 0; i < geoptr->numpoints; i++)
 	{
 		POINT p = geoptr->px[i];
+		POINT buffer_p = {obj->posx + p.x, obj->posy + p.y};
+		obj->px_buffer[i] = buffer_p;
 		graphics_pixel_set(obj->posx + p.x, obj->posy + p.y);
 	}
 }
-
 
 // Kontrollerar om kollision mellan "Pacman" och vägg,
 // vid kollision, flytta tillbaka "Pacman".
@@ -73,5 +73,21 @@ void pacman_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 				}
 			}
         }
+		if(obj->posx < 1)
+		{
+			obj->posx = 1;
+		}
+		else if(obj->posx + UNIT_SIZE > 128)
+		{
+			obj->posx = 128 - UNIT_SIZE - 1;
+		}
+		if(obj->posy < 1)
+		{
+			obj->posy = 1;
+		}
+		else if(obj->posy + UNIT_SIZE > 64)
+		{
+			obj->posy = 64 - UNIT_SIZE - 1;
+		}
     }
 }

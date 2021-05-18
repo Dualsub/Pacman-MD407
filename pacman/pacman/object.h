@@ -5,11 +5,12 @@
 
 // Definerar storlek på en ruta i rutnätet.
 #define UNIT_SIZE 7
-
+#define BASE_SPEED 2
 // Definerar ett objekt med geometri, position och riktning.
 typedef struct tObj 
 {
 	GEOMERTY* geo;
+	POINT px_buffer[MAX_POINTS];
 	int dirx,diry;
 	int posx,posy;
 	void (* draw) (struct tObj *);
