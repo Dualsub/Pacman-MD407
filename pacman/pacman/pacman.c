@@ -1,6 +1,7 @@
 #include "pacman.h"
 #include "keypad.h"
 
+// Uppdaterar positionen för "Pacman".
 void pacman_move(OBJECT* obj, POINT* points, unsigned char num_points)
 {	
 	obj->clear(obj);
@@ -9,11 +10,11 @@ void pacman_move(OBJECT* obj, POINT* points, unsigned char num_points)
     c = keyb();
     switch(c) 
     {
-        case 6: obj->set_speed(obj, 2,0); break;
-        case 4: obj->set_speed(obj, -2,0); break;
+        case 6: obj->set_speed(obj, 1,0); break;
+        case 4: obj->set_speed(obj, -1,0); break;
         case 5: obj->set_speed(obj, 0,0); break;
-        case 2: obj->set_speed(obj, 0,-2); break;
-        case 8: obj->set_speed(obj, 0,2); break;
+        case 2: obj->set_speed(obj, 0,-1); break;
+        case 8: obj->set_speed(obj, 0,1); break;
         default: obj->set_speed(obj, 0,0); break;
     }
 	obj->posx = obj->posx + obj->dirx;
@@ -33,6 +34,9 @@ void pacman_draw(OBJECT* obj)
 	}
 }
 
+
+// Kontrollerar om kollision mellan "Pacman" och vägg,
+// vid kollision, flytta tillbaka "Pacman".
 void pacman_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 {
     for(int i=0; i < num_points; i++)

@@ -4,7 +4,7 @@
 #include "object.h"
 #include "graphics.h"
 
-void ghost_move(OBJECT* obj);
+void ghost_move(OBJECT* obj, POINT* points, unsigned char num_points);
 void ghost_draw(OBJECT* obj);
 
 #endif

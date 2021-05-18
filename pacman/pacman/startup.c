@@ -8,6 +8,7 @@
  #include "keypad.h"
  #include "object.h"
  #include "pacman.h"
+ #include "ghost.h"
  
 __attribute__((naked)) __attribute__((section (".start_section")) )
 void startup ( void )
@@ -71,6 +72,37 @@ void main(void)
 	{4,6}
 	}
 	};
+    
+    GEOMERTY ghost_sprite = {
+    24,
+    5,5,
+    {
+    {2,0},
+    {3,0},
+    {4,0},
+    {1,1},
+    {5,1},
+    {0,2},
+    {0,3},
+    {0,4},
+    {0,5},
+    {0,6},
+    {6,2},
+    {6,3},
+    {6,4},
+    {6,5},
+    {6,6},
+    {1,5},
+    {2,5},
+    {3,5},
+    {4,5},
+    {5,5},
+    {2,6},
+    {4,6},
+    {2,3},
+    {4,3},
+    }
+    };
 	
 	OBJECT pacman = { 
 		&pacman_sprite, 
@@ -81,7 +113,7 @@ void main(void)
 		pacman_move,
 		set_object_speed
 		};
-	
+    
 	POINT level[NUM_WALLS] = {
 /*		{2,2},
 		{2,3},
