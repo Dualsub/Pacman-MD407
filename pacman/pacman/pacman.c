@@ -73,21 +73,47 @@ void pacman_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 				}
 			}
         }
-		if(obj->posx < 2)
+		if(obj->posx < 1)
 		{
-			obj->posx = 2;
+			obj->posx = 1;
 		}
 		else if(obj->posx + UNIT_SIZE > 128)
 		{
-			obj->posx = 128 - UNIT_SIZE - 1;
+			obj->posx = 128 - UNIT_SIZE;
 		}
-		if(obj->posy < 2)
+		if(obj->posy < 1)
 		{
-			obj->posy = 2;
+			obj->posy = 1;
 		}
 		else if(obj->posy + UNIT_SIZE > 64)
 		{
-			obj->posy = 64 - UNIT_SIZE - 1;
+			obj->posy = 64 - UNIT_SIZE;
 		}
     }
+}
+
+void pacman_berries_collide_and_draw(OBJECT* obj, POINT* berries, unsigned char num_berries, unsigned char* points_ptr)
+{
+	for(int i = 0; i < 106; i++)
+	{
+		POINT berry_point = berries[i];
+		if(berry_point.x != 0xFF && berry_point.y != 0xFF)
+		{
+			char overlap_x = ((obj->posx <= berry_point.x * 7 + 4) && (obj->posx + UNIT_SIZE >= berry_point.x * 7 + 4));   
+			char overlap_y = ((obj->posy <= berry_point.y * 7 + 4) && (obj->posy + UNIT_SIZE >= berry_point.y * 7 + 4));
+			if(overlap_x && overlap_y)
+			// Om pacman kolliderar med ett bär skall det inte målas ut igen. 
+			{
+				(*points_ptr)++;
+				// Markerar bäret som taget.
+				POINT p = { 0xFF, 0xFF };
+				berries[i] = p;
+				graphics_pixel_clear(berry_point.x * 7 + 4, berry_point.y * 7 + 4);
+			}
+			else 
+			{
+				graphics_pixel_set(berry_point.x * 7 + 4, berry_point.y * 7 + 4);
+			}
+		}
+	}
 }

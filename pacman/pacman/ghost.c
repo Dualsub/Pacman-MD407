@@ -3,15 +3,26 @@
 #include <math.h>
 
 // Uppdaterar positionen för ett spöke
-void ghost_move(OBJECT* obj, POINT* points, unsigned char num_points)
+void ghost_move(OBJECT* obj, POINT* walls, unsigned char num_walls)
 {
     
     obj->posx = obj->posx + obj->dirx;
 	obj->posy = obj->posy + obj->diry;
-    ghost_wall_overlap(obj, points, num_points);
+    ghost_wall_overlap(obj, walls, num_walls);
     
-	obj->clear(obj);
+	ghost_clear(obj);
     obj->draw(obj);
+}
+
+void ghost_clear(OBJECT* obj)
+{
+	// Rensar de pixlar som sparats i bufferten. 
+	// Rensar ej om ett bär finns på pixeln.
+	for(int i = 0; i < obj->geo->numpoints; i++)
+	{
+		POINT p = obj->px_buffer[i];
+		graphics_pixel_clear(p.x, p.y);
+	}
 }
 
 // Målar ut spöket
@@ -27,11 +38,11 @@ void ghost_draw(OBJECT* obj)
 	}
 }
 
-void ghost_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
+void ghost_wall_overlap(OBJECT* obj, POINT* walls, unsigned char num_walls)
 {
-    for(int i=0; i < num_points; i++)
+    for(int i=0; i < num_walls; i++)
     {
-        POINT wall_point = points[i];
+        POINT wall_point = walls[i];
         // Kontrollerar om "Pacman" överlappar med någon vägg.
         char overlap_x1 = ((obj->posx <= wall_point.x * 7) && (obj->posx + obj->geo->sizex >= wall_point.x * 7));  
         char overlap_x2 = ((wall_point.x * 7 <= obj->posx) && (wall_point.x * 7 + UNIT_SIZE >= obj->posx));  
@@ -77,7 +88,7 @@ void ghost_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 		}
 		else if(obj->posx + UNIT_SIZE > 128)
 		{
-			obj->posx = 128 - UNIT_SIZE - 1;
+			obj->posx = 128 - UNIT_SIZE;
 			obj->dirx = -GHOST_SPEED;
 		}
 		if(obj->posy < 1)
@@ -87,7 +98,7 @@ void ghost_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 		}
 		else if(obj->posy + UNIT_SIZE > 64)
 		{
-			obj->posy = 64 - UNIT_SIZE - 1;
+			obj->posy = 64 - UNIT_SIZE;
 			obj->diry = -GHOST_SPEED;
 		}
     }
