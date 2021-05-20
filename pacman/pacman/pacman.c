@@ -73,17 +73,17 @@ void pacman_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 				}
 			}
         }
-		if(obj->posx < 1)
+		if(obj->posx < 2)
 		{
-			obj->posx = 1;
+			obj->posx = 2;
 		}
 		else if(obj->posx + UNIT_SIZE > 128)
 		{
 			obj->posx = 128 - UNIT_SIZE - 1;
 		}
-		if(obj->posy < 1)
+		if(obj->posy < 2)
 		{
-			obj->posy = 1;
+			obj->posy = 2;
 		}
 		else if(obj->posy + UNIT_SIZE > 64)
 		{

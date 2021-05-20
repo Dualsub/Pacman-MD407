@@ -99,5 +99,5 @@ char ghost_pacman_collide(OBJECT* ghost, OBJECT* pacman)
         char overlap_y1 = ((ghost->posy <= pacman->posy) && (ghost->posy + UNIT_SIZE >= pacman->posy));
         char overlap_y2 = ((pacman->posy <= ghost->posy) && (pacman->posy + UNIT_SIZE >= ghost->posy));
         
-        return !((overlap_x1 || overlap_x2) && (overlap_y1 || overlap_y2));
+        return ((overlap_x1 || overlap_x2) && (overlap_y1 || overlap_y2));
 }
