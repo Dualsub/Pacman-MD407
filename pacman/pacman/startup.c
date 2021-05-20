@@ -10,6 +10,14 @@
  #include "pacman.h"
  #include "ghost.h"
  
+ /*
+  * GRUPP E10: Filip Wramdemark, Simon Sjöling, Samuel Bengtsson 
+  * 
+  * För användning: LCD-display på port E samt Keypad på port D(8-15).
+  * Styrning sker genom nedtryckning av siffrorna 2,4,6,8 på keypaden. 
+  * 
+ */
+ 
 __attribute__((naked)) __attribute__((section (".start_section")) )
 void startup ( void )
 {
@@ -21,6 +29,32 @@ __asm__ volatile(".L1: B .L1\n");				/* never return */
 
 #define NUM_WALLS 56
 #define NUM_BERRIES 106
+
+// OBS! "str" måste vara av längden 3 eller mer.
+void int_to_str(char* str, int i)
+{
+	int s0 = (i / 100);
+	int s1 = (i - 100 * s0) / 10;
+	int s2 = (i - 100 * s0) % 10;
+	
+	str[0] = s0 + '0';
+	str[1] = s1 + '0';
+	str[2] = s2 + '0';
+}
+
+void display_score(int points)
+{
+	char points_str[8];
+	ascii_display("Score:", 1);
+	// Initierar texten på ascii-displayen.
+	points_str[3] = '/';
+	points_str[4] = 1+'0';
+	points_str[5] = 0+'0';
+	points_str[6] = 6+'0';
+	points_str[7] = 0;
+	int_to_str(points_str, points);
+	ascii_display(points_str, 2);
+}
 
 void display_gameover(char is_winner)
 {
@@ -642,25 +676,13 @@ void display_gameover(char is_winner)
 	}
 }
 
-// OBS! "str" måste vara av längden 3 eller mer.
-void int_to_str(char* str, int* i)
-{
-	int s0 = (*i / 100);
-	int s1 = (*i - 100 * s0) / 10;
-	int s2 = (*i - 100 * s0) % 10;
-	
-	str[0] = s0 + '0';
-	str[1] = s1 + '0';
-	str[2] = s2 + '0';
-}
-
 void main(void)
 {
-    graphics_init();
-    keypad_init();
-    
-    ascii_display("       PACMAN", 1);
-    
+	graphics_init();
+	keypad_init();
+
+	ascii_display("       PACMAN", 1);
+
 	GEOMERTY pacman_sprite = { 
 	16, 
 	5, 5,
@@ -843,7 +865,7 @@ void main(void)
 	
 	pacman_draw(&pacman);
 	
-	unsigned char points = 0;
+	int points = 0;
 	
 	while(1)
 	{
@@ -856,20 +878,12 @@ void main(void)
 		if (ghost_pacman_collide(&pacman, &ghost) || ghost_pacman_collide(&pacman, &ghost2) || points >= 106)
 		{
             // Skriver game over.
-			delay_mikro(1000);
+			delay_mikro(2000);
             graphics_clear_screen();
+			display_score(points);
 			display_gameover(points >= 106);
-			char points_str[8];
-			int_to_str(points_str, &points);
-			points_str[3] = '/';
-			points_str[4] = 1+'0';
-			points_str[5] = 0+'0';
-			points_str[6] = 6+'0';
-			points_str[7] = 0;
-			ascii_display("Score:", 1);
-			ascii_display(points_str, 2);
-            delay_milli(1000);
-            break;
+            delay_milli(10000);
+            break; // Slut
 		}
 	}
 	

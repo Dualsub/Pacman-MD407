@@ -42,12 +42,12 @@ void pacman_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
     for(int i=0; i < num_points; i++)
     {
         POINT wall_point = points[i];
-        // Kontrollerar om "Pacman" överlappar med någon vägg.
+        // Kontrollerar om "Pacman" överlappar med vägg i någon riktning.
         char overlap_x1 = ((obj->posx <= wall_point.x * 7) && (obj->posx + obj->geo->sizex >= wall_point.x * 7));  
         char overlap_x2 = ((wall_point.x * 7 <= obj->posx) && (wall_point.x * 7 + UNIT_SIZE >= obj->posx));  
         char overlap_y1 = ((obj->posy <= wall_point.y * 7) && (obj->posy + obj->geo->sizey >= wall_point.y * 7));
         char overlap_y2 = ((wall_point.y * 7 <= obj->posy) && (wall_point.y * 7 + UNIT_SIZE >= obj->posy));
-        // Om de överlappar, placera "Pacman" på rätt plats.
+        // Om de överlappar, placera "Pacman" utanför objecktet.
         if((overlap_x1 || overlap_x2) && (overlap_y1 || overlap_y2))
         {
 			if(obj->dirx != 0)
@@ -62,7 +62,7 @@ void pacman_wall_overlap(OBJECT* obj, POINT* points, unsigned char num_points)
 				}
 			} 
 			else if(obj->diry != 0)
-			{					
+			{
 				if(overlap_y1)
 				{
 					obj->posy -= (obj->posy + obj->geo->sizey + 1) - wall_point.y * 7;

@@ -1,6 +1,8 @@
 #ifndef DELAY_H
 #define DELAY_H
  
+ #define SIMULATOR
+ 
  // Definitioner för SysTick och dess register.
  #define STK		0xE000E010
  #define STK_CTRL 	((unsigned int*) STK)
