@@ -158,6 +158,7 @@ void ascii_ctrl_bit_clear(char x)
 	
 }
 
+// Skriver ut en  given sträng på en given rad. 
 void ascii_display(char* string, int row)
 {
     for (int i = 1; i <= 20; i++)

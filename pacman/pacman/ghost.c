@@ -1,8 +1,6 @@
 #include "ghost.h"
-#include <stdio.h>
-#include <math.h>
 
-// Uppdaterar positionen för ett spöke
+// Uppdaterar positionen för ett spöke.
 void ghost_move(OBJECT* obj, POINT* walls, unsigned char num_walls)
 {
     
@@ -14,6 +12,7 @@ void ghost_move(OBJECT* obj, POINT* walls, unsigned char num_walls)
     obj->draw(obj);
 }
 
+// Avmålar spöket.
 void ghost_clear(OBJECT* obj)
 {
 	// Rensar de pixlar som sparats i bufferten. 
@@ -21,7 +20,11 @@ void ghost_clear(OBJECT* obj)
 	for(int i = 0; i < obj->geo->numpoints; i++)
 	{
 		POINT p = obj->px_buffer[i];
-		graphics_pixel_clear(p.x, p.y);
+        // Säkerställer att randen inte avmålas.
+        if(p.x > 1 && p.y > 1)
+        {
+            graphics_pixel_clear(p.x, p.y);
+        }
 	}
 }
 
@@ -38,6 +41,8 @@ void ghost_draw(OBJECT* obj)
 	}
 }
 
+// Kontrollerar om kollision mellan spöke och vägg,
+// vid kollision, flytta tillbaka spöket och ändra rörelseriktningen.
 void ghost_wall_overlap(OBJECT* obj, POINT* walls, unsigned char num_walls)
 {
     for(int i=0; i < num_walls; i++)
@@ -103,6 +108,7 @@ void ghost_wall_overlap(OBJECT* obj, POINT* walls, unsigned char num_walls)
 		}
     }
 }
+// Kontrollerar kollision mellan ett spöke och "pacman". 
 char ghost_pacman_collide(OBJECT* ghost, OBJECT* pacman)
 {
         char overlap_x1 = ((ghost->posx <= pacman->posx) && (ghost->posx + UNIT_SIZE >= pacman->posx));  
